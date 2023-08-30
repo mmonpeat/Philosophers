@@ -6,7 +6,7 @@
 /*   By: mmonpeat <mmonpeat@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/29 19:59:37 by mmonpeat          #+#    #+#             */
-/*   Updated: 2023/08/29 19:59:45 by mmonpeat         ###   ########.fr       */
+/*   Updated: 2023/08/30 18:40:03 by mmonpeat         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,36 +18,36 @@ void	*philoso(t_philo *philo)
 	int	flag;
 
 	flag = 0;
-	while (1) 
+	while (flag < 10) 
 	{
-		printf("Filòsof %d pensant...\n", philo->num);
-		usleep(100);// Simula temps de pensament
-		printf("Filòsof %d vol menjar...\n", philo->num);
-
-		if (flag == 0)
-		{
-			// Agafa els coberts
-			// printf("l fork = %d \n", philo->l_fork);
-			// printf("r fork = %d \n", philo->r_fork);
-			pthread_mutex_lock(&philo->all->forks[philo->r_fork]);//dreta
-			pthread_mutex_lock(&philo->all->forks[philo->l_fork]);//esquerra
-		}
+		// Agafa els coberts
+		printf("r fork = %d \n", philo->r_fork);
+		pthread_mutex_lock(&philo->all->forks[philo->r_fork]);//dreta
+		printf("Filòsof %d has taken a fork\n", philo->num);
 		
+		printf("l fork = %d \n", philo->l_fork);
+		pthread_mutex_lock(&philo->all->forks[philo->l_fork]);//esquerra
+		printf("Filòsof %d has taken a fork\n", philo->num);
+
+		//com es una rodona, potser dos philosophers han pillat la mateixa
+		if (philo->l_fork == philo->r_fork)
+		{
+			pthread_mutex_unlock(&philo->all->forks[philo->r_fork]);
+		}
 		printf("Filòsof %d menjant...\n", philo->num);
 		usleep(300);  // Simula temps de menjar
-		printf("Filòsof %d ha acabat de menjar.\n", philo->num);
-		
-		if (flag == 1)
-		{
-			// Agafa els coberts
-			pthread_mutex_unlock(&philo->all->forks[philo->r_fork]);
-			pthread_mutex_unlock(&philo->all->forks[philo->l_fork]);
-			flag = 0;
-		}
 
-		
+		// unlock, deixa les dues forquilles usades
+		pthread_mutex_unlock(&philo->all->forks[philo->r_fork]);
+		pthread_mutex_unlock(&philo->all->forks[philo->l_fork]);
+		printf("Filòsof %d ha acabat de menjar.\n", philo->num);
+
 		printf("Filòsof %d dormint...\n", philo->num);
-		usleep(200);// Simula temps de dormir
+		usleep(100);// Simula temps de dormir
+		
+		printf("Filòsof %d pensant...\n", philo->num);
+		usleep(100);// Simula temps de pensament
+		flag++;
 	}
 	return (NULL);
 }
@@ -68,13 +68,17 @@ void	start_philo(t_all *all)
 	all->philo = malloc(sizeof(t_philo) * 3);
 	while (i < all->num_philo)
 	{
+		if (i == all->num_philo - 1)
+			all->philo[i].r_fork = 0;
+		else
+			all->philo[i].r_fork = i + 1;
 		all->philo[i].all = all;
 		all->philo[i].num = i + 1;
 		all->philo[i].l_fork = i;
-		all->philo[i].r_fork = i + 1;
 		//si es lultim fer q la fork sigui la 0
 		pthread_mutex_init(&all->forks[i], NULL);
-		// printf("philo %d l fork = %d \n", all->philo[i].num, all->philo[i].l_fork);
+		printf("philo %d l fork = %d \n", all->philo[i].num, all->philo[i].l_fork);
+		printf("philo %d r fork = %d \n", all->philo[i].num, all->philo[i].r_fork);
 		i++;
 	}
 }
