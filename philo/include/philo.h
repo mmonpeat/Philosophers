@@ -6,7 +6,7 @@
 /*   By: mmonpeat <mmonpeat@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/29 20:00:14 by mmonpeat          #+#    #+#             */
-/*   Updated: 2023/08/29 20:00:16 by mmonpeat         ###   ########.fr       */
+/*   Updated: 2023/08/30 19:30:39 by mmonpeat         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,11 +40,13 @@ struct s_all
 	t_philo			*philo;
 };
 
-// int		ft_start(int ac, char *av, t_all *all);
-// int		ft_atoi(const char *str);
-// void	*hola(void *all);
-void	*philoso(t_philo *philo);
-void	start_philo(t_all *all);
+//STARTS 
+int		ft_start(int ac, char *av, t_all *all);
 void	start_all(t_all *all);
+void	start_philo(t_all *all);
+void	*philoso(t_philo *philo);
+
+//AUXILIARS
+int		ft_atoi(const char *str);
 
 #endif
