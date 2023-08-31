@@ -6,7 +6,7 @@
 /*   By: mmonpeat <mmonpeat@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/29 19:59:37 by mmonpeat          #+#    #+#             */
-/*   Updated: 2023/08/30 19:49:25 by mmonpeat         ###   ########.fr       */
+/*   Updated: 2023/08/31 10:27:04 by mmonpeat         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,10 +17,10 @@ int main(int ac, char  **av)
 	t_all	all;
 
 	//filosophers
-	int i = 0;
-	printf("hola");
-	ft_start(ac - 1, *av, &all);
-	// start_all(&all);
+	int i;
+
+	i = 0;
+	ft_start(ac - 1, av, &all);
 	start_philo(&all);
 	while (i < 3)
 	{
@@ -44,17 +44,19 @@ int main(int ac, char  **av)
 	}
 }
 
-int	ft_start(int ac, char *av, t_all *all)
+int	ft_start(int ac, char **av, t_all *all)
 {
 	if (ac == 4 || ac == 5)
 	{
-		printf("hola");
-		all->num_philo = ft_atoi(&av[1]);
-		all->t_die = ft_atoi(&av[2]);
-		all->t_eat = ft_atoi(&av[3]);
-		all->t_sleep = ft_atoi(&av[4]);
+		all->num_philo = ft_atoi(av[1]);
+		all->t_die = ft_atoi(av[2]);
+		all->t_eat = ft_atoi(av[3]);
+		all->t_sleep = ft_atoi(av[4]);
 		if (av[5])
-			all->eat_times = ft_atoi(&av[5]);
+			all->eat_times = ft_atoi(av[5]);
+		// no puc posar per defecte el valor de vegades que han de menjar
+		// else
+		// 	all->eat_times = 10;
 	}
 	else
 	{
@@ -67,20 +69,12 @@ int	ft_start(int ac, char *av, t_all *all)
 	return (0);
 }
 
-// void	start_all(t_all *all)
-// {
-// 	all->eat_times = 2;
-// 	all->num_philo = 3;
-// 	all->t_die = 600;
-// 	all->t_eat = 200;
-// 	all->t_sleep = 200;
-// }
 
 void	start_philo(t_all *all)
 {
 	int i = 0;
-	all->forks = malloc(sizeof(pthread_mutex_t) * 3);
-	all->philo = malloc(sizeof(t_philo) * 3);
+	all->forks = malloc(sizeof(pthread_mutex_t) * all->num_philo);
+	all->philo = malloc(sizeof(t_philo) * all->num_philo);
 	while (i < all->num_philo)
 	{
 		//si es lultim fer q la fork sigui la 0

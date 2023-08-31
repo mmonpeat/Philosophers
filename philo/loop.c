@@ -6,7 +6,7 @@
 /*   By: mmonpeat <mmonpeat@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/30 19:31:30 by mmonpeat          #+#    #+#             */
-/*   Updated: 2023/08/30 19:44:20 by mmonpeat         ###   ########.fr       */
+/*   Updated: 2023/08/31 10:24:56 by mmonpeat         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@ void	*philoso(t_philo *philo)
 		// printf("r fork = %d \n", philo->r_fork);
 		pthread_mutex_lock(&philo->all->forks[philo->r_fork]);//dreta
 		printf("Filòsof %d has taken a fork\n", philo->num);
-		
+
 		// printf("l fork = %d \n", philo->l_fork);
 		pthread_mutex_lock(&philo->all->forks[philo->l_fork]);//esquerra
 		printf("Filòsof %d has taken a fork\n", philo->num);
