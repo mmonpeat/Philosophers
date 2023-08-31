@@ -6,7 +6,7 @@
 /*   By: mmonpeat <mmonpeat@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/30 19:31:30 by mmonpeat          #+#    #+#             */
-/*   Updated: 2023/08/31 10:24:56 by mmonpeat         ###   ########.fr       */
+/*   Updated: 2023/08/31 13:30:50 by mmonpeat         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,10 +22,14 @@ void	*philoso(t_philo *philo)
 	{
 		// Agafa els coberts
 		// printf("r fork = %d \n", philo->r_fork);
+		if ((philo->num & 1) == 1)
+			usleep(200);//hauria des ser una mica mes de un milisegon no 200
 		pthread_mutex_lock(&philo->all->forks[philo->r_fork]);//dreta
 		printf("Filòsof %d has taken a fork\n", philo->num);
 
 		// printf("l fork = %d \n", philo->l_fork);
+		if ((philo->num & 1) == 1)
+			usleep(200);//hauria des ser una mica mes de un milisegon no 200
 		pthread_mutex_lock(&philo->all->forks[philo->l_fork]);//esquerra
 		printf("Filòsof %d has taken a fork\n", philo->num);
 
@@ -35,7 +39,7 @@ void	*philoso(t_philo *philo)
 			pthread_mutex_unlock(&philo->all->forks[philo->r_fork]);
 		}
 		printf("Filòsof %d menjant...\n", philo->num);
-		usleep(300);  // Simula temps de menjar
+		usleep(300);  // Simula temps de menjar massa temps
 
 		// unlock, deixa les dues forquilles usades
 		pthread_mutex_unlock(&philo->all->forks[philo->r_fork]);
