@@ -10,7 +10,7 @@ OBJS = $(addprefix ${OBJ_DIR}/,$(SRCS:.c=.o))
 
 DEPS = $(addsuffix .d,$(basename ${OBJS}))
 
-CFLAGS = -Wall -Wextra -Werror -g -fsanitize=address
+CFLAGS = -Wall -Wextra -Werror #-g -fsanitize=address
 
 GREEN = \033[1;92m
 RED = \033[1;91m

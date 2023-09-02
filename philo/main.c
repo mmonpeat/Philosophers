@@ -6,7 +6,7 @@
 /*   By: mmonpeat <mmonpeat@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/29 19:59:37 by mmonpeat          #+#    #+#             */
-/*   Updated: 2023/09/02 11:59:05 by mmonpeat         ###   ########.fr       */
+/*   Updated: 2023/09/02 13:49:40 by mmonpeat         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,9 +36,18 @@ int main(int ac, char  **av)
 		i++;
 	}
 	i = 0;
-	while (i < all.num_philo)
+	while (i <= all.num_philo)
 	{
 		pthread_mutex_destroy(&all.forks[i]);
+		i++;
+	}
+	i = 0;
+	while (i < all.num_philo)
+	{
+		free(all.philo);
+		// free(all.philo->l_fork);
+		// free(all.philo->r_fork);
+		free(&all.forks[i]);
 		i++;
 	}
 	return (0);
