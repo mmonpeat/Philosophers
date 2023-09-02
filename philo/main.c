@@ -6,7 +6,7 @@
 /*   By: mmonpeat <mmonpeat@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/29 19:59:37 by mmonpeat          #+#    #+#             */
-/*   Updated: 2023/09/02 11:21:24 by mmonpeat         ###   ########.fr       */
+/*   Updated: 2023/09/02 11:59:05 by mmonpeat         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,7 +78,10 @@ int		start_philo(t_all *all)
 		return (-1);
 	all->philo = malloc(sizeof(t_philo) * all->num_philo);
 	if (!all->philo)
+	{
+		free(all->forks);
 		return (-1);//crec que hauria de retornar NULL no -1 pero llavors es complica
+	}
 	while (i < all->num_philo)
 	{
 		//si es lultim fer q la fork sigui la 0
