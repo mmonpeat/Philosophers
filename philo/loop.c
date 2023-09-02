@@ -6,7 +6,7 @@
 /*   By: mmonpeat <mmonpeat@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/30 19:31:30 by mmonpeat          #+#    #+#             */
-/*   Updated: 2023/09/02 13:31:48 by mmonpeat         ###   ########.fr       */
+/*   Updated: 2023/09/02 18:03:07 by mmonpeat         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,8 +15,9 @@
 // Funció que simula el comportament d'un filòsof
 void	*philosophers(t_philo *philo)
 {
-	int	eat_rep;
-	int flag;
+	long long int	time;
+	int				eat_rep;
+	int 			flag;
 
 	eat_rep = 1;
 	flag = 1;
@@ -42,22 +43,36 @@ void	*philosophers(t_philo *philo)
 			pthread_mutex_unlock(&philo->all->forks[philo->r_fork]);
 		}
 		printf("%d is eating\n", philo->num);
-		usleep(philo->all->t_eat);//300 hauria -> philo->all->t_eat
-
+		time = get_time() + philo->all->t_eat;
+		philo->last_ate = get_time();
+		//pthread_mutex_unlock(&philo->all->forks);//aquesta crec que no cal
+		if ((time - philo->last_ate) >= philo->all->t_die)
+		{
+			printf("%d is dead\n", philo->num);
+			return(NULL);
+		}
+		else
+			usleep(philo->all->t_eat);//300 hauria -> philo->all->t_eat
+		
 		// unlock, deixa les dues forquilles usades
 		pthread_mutex_unlock(&philo->all->forks[philo->r_fork]);
 		pthread_mutex_unlock(&philo->all->forks[philo->l_fork]);
 
-		printf("%d is sleeping\n", philo->num);
-		usleep(philo->all->t_sleep);//200 hauria -> philo->all->t_sleep
-		
-		printf("%d is thinking\n", philo->num);
-		// usleep(100);
-		eat_rep--;
+		eat_rep--;//crec que caldria pujar-ho despres del unlock
 		if (flag == 1)
 			eat_rep = 1;
+			
+		//MOREN
+		// if (get)
+		if (eat_rep != 0)
+		{
+			printf("%d is sleeping\n", philo->num);
+			usleep(philo->all->t_sleep);//200 hauria -> philo->all->t_sleep
+			printf("%d is thinking\n", philo->num);
+		}
+
 	}
-	// free(philo->all->forks);
+	//free(philo->all->forks);
 	//free(philo->all->philo);
 	return (NULL);
 }

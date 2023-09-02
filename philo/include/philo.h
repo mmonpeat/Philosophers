@@ -6,7 +6,7 @@
 /*   By: mmonpeat <mmonpeat@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/29 20:00:14 by mmonpeat          #+#    #+#             */
-/*   Updated: 2023/09/02 11:19:07 by mmonpeat         ###   ########.fr       */
+/*   Updated: 2023/09/02 18:05:48 by mmonpeat         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,7 @@
 #include <stdlib.h>
 #include <unistd.h>
 #include <pthread.h>
+#include <sys/time.h>
 
 typedef struct	s_all	t_all;
 
@@ -27,26 +28,30 @@ typedef struct s_philo
 	int				num;//el numero vull dir 1, 2 o 3 
 	int				r_fork;//fork dreta
 	int				l_fork;//fork esquerra
+	long long int	last_ate;
+	
 }				t_philo;
 
 struct s_all 
 {
-	int				num_philo;
+	long int		num_philo;
 	pthread_mutex_t	*forks;//array amb dues forks
-	int				t_die;
-	int				t_eat;
-	int				t_sleep;
+	long int		t_die;
+	long int		t_eat;
+	long int		t_sleep;
 	int				eat_times;
 	t_philo			*philo;//apunta a l'estruct de dalt
 };
 
 //STARTS 
 int			ft_start(int ac, char **av, t_all *all);
-// void		start_all(t_all *all);
 int			start_philo(t_all *all);
 void		*philosophers(t_philo *philo);
 
 //AUXILIARS
 long int	ft_atol(char *str);
+
+//GESTIO TEMPS
+long int	get_time(void);
 
 #endif
