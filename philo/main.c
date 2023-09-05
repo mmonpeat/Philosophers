@@ -6,7 +6,7 @@
 /*   By: mmonpeat <mmonpeat@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/29 19:59:37 by mmonpeat          #+#    #+#             */
-/*   Updated: 2023/09/02 13:49:40 by mmonpeat         ###   ########.fr       */
+/*   Updated: 2023/09/05 11:01:10 by mmonpeat         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,6 +72,7 @@ int	ft_start(int ac, char **av, t_all *all)
 		printf("2. El temps que triguen en morir aquests\n");
 		printf("3. El temps que estant menjant aquests\n");
 		printf("4. El temps que estant dormint aquests\n");
+		printf("5. Opcionalment la quaantitat de vegades que vols que menji cada filósof\n");
 		return (-1);
 	}
 	return (0);

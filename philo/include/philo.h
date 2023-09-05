@@ -6,7 +6,7 @@
 /*   By: mmonpeat <mmonpeat@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/29 20:00:14 by mmonpeat          #+#    #+#             */
-/*   Updated: 2023/09/02 18:05:48 by mmonpeat         ###   ########.fr       */
+/*   Updated: 2023/09/05 11:44:41 by mmonpeat         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,7 +47,7 @@ struct s_all
 int			ft_start(int ac, char **av, t_all *all);
 int			start_philo(t_all *all);
 void		*philosophers(t_philo *philo);
-
+void		print_mutex(t_philo *philo, int num);
 //AUXILIARS
 long int	ft_atol(char *str);
 
