@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   philo.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mmonpeat <mmonpeat@student.42.fr>          +#+  +:+       +#+        */
+/*   By: marvin <marvin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/29 20:00:14 by mmonpeat          #+#    #+#             */
-/*   Updated: 2023/09/16 19:26:26 by mmonpeat         ###   ########.fr       */
+/*   Updated: 2023/09/16 21:46:34 by marvin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <unistd.h>
+#include <limits.h>
 #include <pthread.h>
 #include <sys/time.h>
 
@@ -37,12 +38,14 @@ typedef struct s_philo
 
 struct s_all 
 {
+	long int		start;
 	long int		num_philo;
 	long int		t_die;
 	long int		t_eat;
 	long int		t_sleep;
 	int				eat_times;
 	int				any_dead;
+	int				finished_count;
 	pthread_mutex_t	*forks;//array amb dues forks
 	pthread_mutex_t	print;
 	pthread_mutex_t	update;
@@ -51,19 +54,25 @@ struct s_all
 };
 
 //STARTS 
-int			ft_start(int ac, char **av, t_all *all);
+int			ft_start(char **av, t_all *all);
 int			start_philo(t_all *all);
 int			create_threads(t_all *all);
 
 //loop
 void		*philosophers(t_philo *philo);
-int			check_dead(t_philo *philo, int i);
 int			eat(t_philo *philo);
-// void		print_mutex(t_philo *philo, int num);
-//AUXILIARS
-long int	ft_atol(char *str);
+void		sleep_and_think(t_philo *philo);
+int			print_status(t_philo *philo, char *s);
 
-//GESTIO TEMPS
+//ckeck
+int			valid_args(int ac, char **av);
+int			check_dead(t_philo *philo, int i);
+
+//utils
+int			ft_isdigit(char *s);
+long int	ft_atol(char *str);
+int			ft_error(char *s, t_all *all);
+void		ft_free(t_all *all);
 long int	get_time(void);
 
 #endif

@@ -4,7 +4,7 @@ HEADER = include/philo.h
 
 INCLUDE = -I./ 
 
-SRCS = main.c loop.c utils.c
+SRCS = main.c loop.c utils.c check.c
 
 OBJS = $(addprefix ${OBJ_DIR}/,$(SRCS:.c=.o))
 

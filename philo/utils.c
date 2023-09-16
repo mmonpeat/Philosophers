@@ -3,14 +3,27 @@
 /*                                                        :::      ::::::::   */
 /*   utils.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mmonpeat <mmonpeat@student.42.fr>          +#+  +:+       +#+        */
+/*   By: marvin <marvin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/02 18:04:05 by mmonpeat          #+#    #+#             */
-/*   Updated: 2023/09/16 13:06:45 by mmonpeat         ###   ########.fr       */
+/*   Updated: 2023/09/16 21:41:48 by marvin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "include/philo.h"
+
+int	ft_isdigit(char *s)
+{
+	int	i;
+
+	i = -1;
+	while (s[++i])
+	{
+		if (s[i] < '0' || s[i] > '9')
+			return (0);
+	}
+	return (1);
+}
 
 long int	ft_atol(char *str)
 {
@@ -35,6 +48,28 @@ long int	ft_atol(char *str)
 		i++;
 	}
 	return (neg * res);
+}
+
+int	ft_error(char *s, t_all *all)
+{
+	printf("%s\n", s);
+	if (all)
+		ft_free(all);
+	return (-1);
+}
+
+void	ft_free(t_all *all)//entendre funcio
+{
+	int	i;
+
+	free(all->philo);
+	i = -1;
+	while (++i < all->num_philo)
+		pthread_mutex_destroy(&all->forks[i]);
+	pthread_mutex_destroy(&all->print);
+	pthread_mutex_destroy(&all->update);
+	pthread_mutex_destroy(&all->done);
+	free(all->forks);
 }
 
 long int	get_time(void)
