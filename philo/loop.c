@@ -6,7 +6,7 @@
 /*   By: mmonpeat <mmonpeat@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/30 19:31:30 by mmonpeat          #+#    #+#             */
-/*   Updated: 2023/09/16 19:27:49 by mmonpeat         ###   ########.fr       */
+/*   Updated: 2023/09/16 19:29:30 by mmonpeat         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,6 @@ void	*philosophers(t_philo *philo)
 			pthread_mutex_unlock(&philo->all->done);
 			break ;
 		}
-
 		if (!check_dead(philo, 0))
 			sleep_think(philo);
 		pthread_mutex_lock(&philo->all->done);
