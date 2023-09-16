@@ -6,7 +6,7 @@
 /*   By: mmonpeat <mmonpeat@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/30 19:31:30 by mmonpeat          #+#    #+#             */
-/*   Updated: 2023/09/05 11:47:46 by mmonpeat         ###   ########.fr       */
+/*   Updated: 2023/09/16 13:51:23 by mmonpeat         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,18 +17,18 @@ void	*philosophers(t_philo *philo)
 {
 	long long int	time;
 	int				eat_rep;
-	int 			flag;
+	// int 			flag;
 	int				dead_flag;
 
 	eat_rep = 1;
-	flag = 1;
+	// flag = 1;
 	dead_flag = 1;
-	if (philo->all->eat_times)
-	{
-		eat_rep = philo->all->eat_times;//passa per qui la quant de philo
-		flag = 0;
-	}
-	while (eat_rep > 0)//cal qe tots els filo mengin eat_rep, no nomes el primer philo 
+	time = 0;
+	if ((philo->num & 1) == 1)//vol dir que es impar, estil bits
+		usleep(philo->all->t_eat / 2);//*1000
+
+	//cal qe tots els filo mengin eat_rep, no nomes el primer philo 
+	while (!cheak_dead(philo, 1))//si retorna 1 es que un philo l'ha palmat pt ja no entra
 	{
 		//temps
 		printf("passa per temps\n");
@@ -37,8 +37,6 @@ void	*philosophers(t_philo *philo)
 
 		// Agafa els coberts
 		// printf("r fork = %d \n", philo->r_fork);
-		if ((philo->num & 1) == 1)//vol dir que es impar, estil bits
-			usleep(philo->all->t_eat / 2);//200 hauria ->  philo->all->t_eat
 		pthread_mutex_lock(&philo->all->forks[philo->r_fork]);//dreta
 		printf("%lli %d has taken a fork\n", time, philo->num);
 		pthread_mutex_lock(&philo->all->forks[philo->l_fork]);//esquerra
@@ -67,8 +65,8 @@ void	*philosophers(t_philo *philo)
 		pthread_mutex_unlock(&philo->all->forks[philo->l_fork]);
 
 		eat_rep--;//crec que caldria pujar-ho despres del unlock
-		if (flag == 1)
-			eat_rep = 1;
+		// if (flag == 1)
+		// 	eat_rep = 1;
 			
 		//MOREN
 		// if (get)
@@ -85,18 +83,22 @@ void	*philosophers(t_philo *philo)
 	return (NULL);
 }
 
-// void	print_mutex(t_philo *philo, int num)
-// {
-// 	if (num == 1)//fork r
-// 	{
-// 		pthread_mutex_lock(&philo->all->forks[philo->r_fork]);//dreta
-// 		printf("%lli %d has taken a fork\n", time, philo->num);
-// 		pthread_mutex_unlock(&philo->all->forks[philo->r_fork]);
-// 	}
-// 	else if (num == 2)
-// 	{
-// 		pthread_mutex_lock(&philo->all->forks[philo->l_fork]);//esquerra
-// 		printf("%lli %d has taken a fork\n", time, philo->num);
-// 		pthread_mutex_unlock(&philo->all->forks[philo->l_fork]);
-// 	}
-// }
+int			cheak_dead(t_philo *philo, int i)
+{
+	long long int	time;
+
+	pthread_mutex_lock(&philo->all->update);
+	time = get_time() - philo->all->t_eat;
+	if (time > philo->all->t_die)
+	{
+		pthread_mutex_lock(&philo->all->palmar);
+		philo->dead = 1;
+		pthread_mutex_unlock(&philo->all->palmar);
+		if (i == 1)
+			printf("%lli %d is dead\n", time, philo->num);//print_status(philo, "died");
+		pthread_mutex_unlock(&philo->all->update);
+		return (1);
+	}
+	pthread_mutex_unlock(&philo->all->update);
+	return (0);
+}

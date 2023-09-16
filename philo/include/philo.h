@@ -6,7 +6,7 @@
 /*   By: mmonpeat <mmonpeat@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/29 20:00:14 by mmonpeat          #+#    #+#             */
-/*   Updated: 2023/09/05 12:10:31 by mmonpeat         ###   ########.fr       */
+/*   Updated: 2023/09/16 13:44:01 by mmonpeat         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,24 +29,32 @@ typedef struct s_philo
 	int				r_fork;//fork dreta
 	int				l_fork;//fork esquerra
 	long long int	last_ate;
+	int				dead;//esta o no mort
 	
 }				t_philo;
 
 struct s_all 
 {
 	long int		num_philo;
-	pthread_mutex_t	*forks;//array amb dues forks
 	long int		t_die;
 	long int		t_eat;
 	long int		t_sleep;
 	int				eat_times;
+	pthread_mutex_t	*forks;//array amb dues forks
+	pthread_mutex_t	print;
+	pthread_mutex_t	update;
+	pthread_mutex_t	palmar;
 	t_philo			*philo;//apunta a l'estruct de dalt
 };
 
 //STARTS 
 int			ft_start(int ac, char **av, t_all *all);
 int			start_philo(t_all *all);
+int			create_threads(t_all *all);
+
+//loop
 void		*philosophers(t_philo *philo);
+int			cheak_dead(t_philo *philo, int i);
 // void		print_mutex(t_philo *philo, int num);
 //AUXILIARS
 long int	ft_atol(char *str);

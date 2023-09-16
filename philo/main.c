@@ -6,13 +6,13 @@
 /*   By: mmonpeat <mmonpeat@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/29 19:59:37 by mmonpeat          #+#    #+#             */
-/*   Updated: 2023/09/05 11:01:10 by mmonpeat         ###   ########.fr       */
+/*   Updated: 2023/09/16 13:45:12 by mmonpeat         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "include/philo.h"
 
-int main(int ac, char  **av)
+int	main(int ac, char  **av)
 {
 	t_all	all;
 
@@ -21,14 +21,10 @@ int main(int ac, char  **av)
 
 	i = 0;
 	if (ft_start(ac - 1, av, &all) == -1)
-		return (0);
+		return (0);//crear funcio error
 	if (start_philo(&all) == -1)
 		return (0);
-	while (i < all.num_philo)
-	{
-		pthread_create(&all.philo[i].thread_id, NULL, (void *)philosophers, &all.philo[i]);
-		i++;
-	}
+	create_threads(&all);
 	i = 0;
 	while (i < all.num_philo)
 	{
@@ -78,7 +74,7 @@ int	ft_start(int ac, char **av, t_all *all)
 	return (0);
 }
 
-int		start_philo(t_all *all)
+int	start_philo(t_all *all)
 {
 	int	i;
 
@@ -110,27 +106,15 @@ int		start_philo(t_all *all)
 	return (0);
 }
 
-long int	ft_atol(char *str)
+int	create_threads(t_all *all)
 {
-	int			i;
-	long int	neg;
-	long int	res;
+	int		i;
 
-	i = 0;
-	neg = 1;
-	res = 0;
-	while ((str[i] >= 9 && str[i] <= 13) || str[i] == 32)
-		i++;
-	if (str[i] == '+' || str[i] == '-')
-	{
-		if (str[i] == '-')
-			neg *= -1;
-		i++;
-	}
-	while (str[i] >= '0' && str[i] <= '9')
-	{
-		res = (res * 10) + (str[i] - '0');
-		i++;
-	}
-	return (neg * res);
+	i = -1;
+	pthread_mutex_lock(&all->update); //nomes pot crearr un philosoph a la vagada
+	while (++i < all->num_philo)
+		pthread_create(&all->philo[i].thread_id, NULL, \
+		(void *)philosophers, &all->philo[i]);
+	pthread_mutex_unlock(&all->update);
+	return (0);
 }
