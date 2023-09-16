@@ -6,7 +6,7 @@
 /*   By: mmonpeat <mmonpeat@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/29 20:00:14 by mmonpeat          #+#    #+#             */
-/*   Updated: 2023/09/16 13:44:01 by mmonpeat         ###   ########.fr       */
+/*   Updated: 2023/09/16 19:26:26 by mmonpeat         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,6 +28,8 @@ typedef struct s_philo
 	int				num;//el numero vull dir 1, 2 o 3 
 	int				r_fork;//fork dreta
 	int				l_fork;//fork esquerra
+	int				ate_count;
+	int				done;
 	long long int	last_ate;
 	int				dead;//esta o no mort
 	
@@ -40,10 +42,11 @@ struct s_all
 	long int		t_eat;
 	long int		t_sleep;
 	int				eat_times;
+	int				any_dead;
 	pthread_mutex_t	*forks;//array amb dues forks
 	pthread_mutex_t	print;
 	pthread_mutex_t	update;
-	pthread_mutex_t	palmar;
+	pthread_mutex_t	done;
 	t_philo			*philo;//apunta a l'estruct de dalt
 };
 
@@ -54,7 +57,8 @@ int			create_threads(t_all *all);
 
 //loop
 void		*philosophers(t_philo *philo);
-int			cheak_dead(t_philo *philo, int i);
+int			check_dead(t_philo *philo, int i);
+int			eat(t_philo *philo);
 // void		print_mutex(t_philo *philo, int num);
 //AUXILIARS
 long int	ft_atol(char *str);
