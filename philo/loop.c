@@ -15,7 +15,7 @@
 // Funció que simula el comportament d'un filòsof
 void	*philosophers(t_philo *philo)
 {
-	if ((philo->num & 1) == 1)//vol dir que es impar, estil bits ((philo->num & 1) == 1) == (philo->num % 2 != 0) però normal
+	if ((philo->num & 1) == 0)//vol dir que es impar, estil bits ((philo->num & 1) == 1) == (philo->num % 2 == 0) però normal
 		usleep(philo->all->t_eat * 1000);//*1000
 	while (!check_dead(philo, 1))//si retorna 1 es que un philo l'ha palmat pt ja no entra
 	{
