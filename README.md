@@ -1,5 +1,6 @@
 # Philosophers
-
+## Aquest arxiu està escrit en català i en anglès.
+## This file is written in Catalan and English.
 🍝 Imagina que tens un grup de filòsofs asseguts al voltant d'una taula rodona, i al mig d'aquesta taula hi ha un gran bol de espagueti.
 
 🤔 Aquests filòsofs poden fer tres coses: menjar, pensar o dormir. Però hi ha algunes regles estrictes:
@@ -44,7 +45,7 @@ Aquesta és l'explicació per a la línia 86 del fitxer «loop.c»:
   - %s: Aquest és un especificador de format a la cadena de format que indica que s'ha d'imprimir una cadena de caràcters (cadena). El valor que s'imprimeix prové de la variable 's', que és una cadena de text que representa l'estat del filòsof.
 
 
-Translate it into English:
+## Translate it into English:
 
 🍝 Imagine you have a group of philosophers seated around a round table, and in the middle of this table, there is a large bowl of spaghetti.
 
