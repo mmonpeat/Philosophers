@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   loop.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: marvin <marvin@student.42.fr>              +#+  +:+       +#+        */
+/*   By: mmonpeat <mmonpeat@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/30 19:31:30 by mmonpeat          #+#    #+#             */
-/*   Updated: 2023/09/16 21:11:09 by marvin           ###   ########.fr       */
+/*   Updated: 2023/09/17 12:38:11 by mmonpeat         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,14 +15,15 @@
 // Funció que simula el comportament d'un filòsof
 void	*philosophers(t_philo *philo)
 {
-	if ((philo->num & 1) == 1)//vol dir que es impar, estil bits
-		usleep(philo->all->t_eat / 2);//*1000
+	if (philo->num % 2 == 0)//vol dir que es impar, estil bits ((philo->num & 1) == 1) == (philo->num % 2 == 0)
+		usleep(philo->all->t_eat * 1000);//*1000
 	while (!check_dead(philo, 1))//si retorna 1 es que un philo l'ha palmat pt ja no entra
 	{
 		if (eat(philo))
 			break ;
 		if (philo->ate_count == philo->all->eat_times)
 		{
+			//printf("comprovació %i == %i\n", philo->ate_count, philo->all->eat_times);
 			pthread_mutex_lock(&philo->all->done);
 			philo->done = 1;
 			pthread_mutex_unlock(&philo->all->done);
@@ -61,12 +62,13 @@ int	eat(t_philo *philo)
 	while (get_time() <= time && !check_dead(philo, 0))
 		usleep(200);
 	philo->ate_count++;
+	//printf("vegades que menja un philo: %i\n", philo->ate_count);
 	pthread_mutex_unlock(&philo->all->forks[philo->r_fork]);// unlock, deixa les dues forquilles usades
 	pthread_mutex_unlock(&philo->all->forks[philo->l_fork]);
 	return (0);
 }
- 
-void		sleep_and_think(t_philo *philo)
+
+void	sleep_and_think(t_philo *philo)
 {
 	long long	time;
 

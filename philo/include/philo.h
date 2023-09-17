@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   philo.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: marvin <marvin@student.42.fr>              +#+  +:+       +#+        */
+/*   By: mmonpeat <mmonpeat@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/29 20:00:14 by mmonpeat          #+#    #+#             */
-/*   Updated: 2023/09/16 21:46:34 by marvin           ###   ########.fr       */
+/*   Updated: 2023/09/17 12:09:43 by mmonpeat         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,7 @@ typedef struct s_philo
 	int				r_fork;//fork dreta
 	int				l_fork;//fork esquerra
 	int				ate_count;
-	int				done;
+	int				done;//marcador que indica si un filòsof ha acabat de menjar o no.
 	long long int	last_ate;
 	int				dead;//esta o no mort
 	
@@ -67,6 +67,8 @@ int			print_status(t_philo *philo, char *s);
 //ckeck
 int			valid_args(int ac, char **av);
 int			check_dead(t_philo *philo, int i);
+int			join_philo(t_all *all);
+int			philo_finish(t_all *all);
 
 //utils
 int			ft_isdigit(char *s);
