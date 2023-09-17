@@ -6,7 +6,7 @@
 /*   By: mmonpeat <mmonpeat@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/30 19:31:30 by mmonpeat          #+#    #+#             */
-/*   Updated: 2023/09/17 12:38:11 by mmonpeat         ###   ########.fr       */
+/*   Updated: 2023/09/17 13:10:30 by mmonpeat         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 // Funció que simula el comportament d'un filòsof
 void	*philosophers(t_philo *philo)
 {
-	if (philo->num % 2 == 0)//vol dir que es impar, estil bits ((philo->num & 1) == 1) == (philo->num % 2 == 0)
+	if ((philo->num & 1) == 1)//vol dir que es impar, estil bits ((philo->num & 1) == 1) == (philo->num % 2 == 0)
 		usleep(philo->all->t_eat * 1000);//*1000
 	while (!check_dead(philo, 1))//si retorna 1 es que un philo l'ha palmat pt ja no entra
 	{
@@ -51,6 +51,7 @@ int	eat(t_philo *philo)
 	if (philo->l_fork == philo->r_fork)//com es una rodona, potser dos philosophers han pillat la mateixa
 	{
 		pthread_mutex_unlock(&philo->all->forks[philo->r_fork]);
+		return (1);
 	}
 	pthread_mutex_lock(&philo->all->forks[philo->l_fork]);//esquerra
 	print_status(philo, "has taken a fork");
