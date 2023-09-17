@@ -87,7 +87,7 @@ int	print_status(t_philo *philo, char *s)
 	pthread_mutex_lock(&philo->all->done);
 	if (!philo->all->any_dead)
 		printf("%04li\t%i\t%s\n", (get_time() - \
-			philo->all->start), philo->num, s);//saber que fa aixo
+			philo->all->start), philo->num, s);//explicat readme
 	pthread_mutex_unlock(&philo->all->done);
 	pthread_mutex_unlock(&philo->all->print);
 	return (0);
