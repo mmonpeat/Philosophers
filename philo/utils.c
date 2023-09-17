@@ -58,14 +58,14 @@ int	ft_error(char *s, t_all *all)
 	return (-1);
 }
 
-void	ft_free(t_all *all)//entendre funcio
+void	ft_free(t_all *all)
 {
 	int	i;
 
 	free(all->philo);
 	i = -1;
-	while (++i < all->num_philo)
-		pthread_mutex_destroy(&all->forks[i]);
+	while (++i < all->num_philo)//destruim totes les forks
+		pthread_mutex_destroy(&all->forks[i]);//totes les variables pthread_mutex_t deven 
 	pthread_mutex_destroy(&all->print);
 	pthread_mutex_destroy(&all->update);
 	pthread_mutex_destroy(&all->done);
