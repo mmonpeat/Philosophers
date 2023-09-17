@@ -1,6 +1,8 @@
 # Philosophers
-## Aquest arxiu està escrit en català i en anglès.
-## This file is written in Catalan and English.
+
+🧠 Aquest arxiu està escrit en català i en anglès.
+🧠 This file is written in Catalan and English.
+
 🍝 Imagina que tens un grup de filòsofs asseguts al voltant d'una taula rodona, i al mig d'aquesta taula hi ha un gran bol de espagueti.
 
 🤔 Aquests filòsofs poden fer tres coses: menjar, pensar o dormir. Però hi ha algunes regles estrictes:
