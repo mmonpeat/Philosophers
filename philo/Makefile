@@ -35,7 +35,8 @@ ${OBJ_DIR}/%.o : %.c Makefile
 	@${CC} -MT $@ ${CFLAGS} -MMD -MP ${INCLUDE} -c $< -o $@
 
 all:
-	@${MAKE} ${NAME}
+	@${MAKE} ${NAME} #--no-print-directory
+#all: ${NAME}
 
 ${NAME}: ${OBJS}
 	${CC} ${CFLAGS} ${OBJS} -o ${NAME}
@@ -53,3 +54,4 @@ fclean: clean
 re: fclean all
 
 .PHONY: all clean fclean re
+#.SILENT: all clean fclean re ${NAME}
